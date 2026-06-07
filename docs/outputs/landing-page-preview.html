@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chief of Staff Implementation</title>
+  <style>
+    :root {
+      --bg: #f3eee6;
+      --surface: rgba(255, 251, 245, 0.84);
+      --ink: #1e2833;
+      --muted: #586675;
+      --line: rgba(30, 40, 51, 0.12);
+      --accent: #b85a33;
+      --accent-deep: #7a3015;
+      --accent-soft: #f3d9cb;
+      --teal: #1f4d4a;
+      --teal-soft: #d5e7e4;
+      --shadow: 0 24px 60px rgba(30, 40, 51, 0.11);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.56;
+      background:
+        radial-gradient(circle at top left, rgba(184, 90, 51, 0.10), transparent 30%),
+        radial-gradient(circle at top right, rgba(31, 77, 74, 0.14), transparent 22%),
+        linear-gradient(180deg, #faf7f2 0%, var(--bg) 100%);
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero { padding: 28px 0 72px; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0 24px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(31, 77, 74, 0.16);
+      font-size: 12px;
+      color: var(--muted);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+      gap: 28px;
+      padding: 36px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1,h2,h3 {
+      margin: 0 0 16px;
+      line-height: 1.02;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(50px, 7vw, 84px);
+      max-width: 10ch;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4.5vw, 54px);
+      max-width: 13ch;
+    }
+
+    h3 {
+      font-size: 24px;
+      color: var(--teal);
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 28px 0 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
+      transition: transform 140ms ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(122, 48, 21, 0.24);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(30, 40, 51, 0.10);
+      color: var(--teal);
+    }
+
+    .micro {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .hero-panel {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(31,77,74,0.98), rgba(21,57,55,0.96));
+      color: #f5f1eb;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-panel p { color: rgba(245,241,235,0.82); }
+
+    .panel-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .panel-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff4ec;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    section { padding: 0 0 28px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(30, 40, 51, 0.05);
+    }
+
+    ul, ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .numbered {
+      list-style: none;
+      padding: 0;
+      counter-reset: steps;
+    }
+
+    .numbered li {
+      position: relative;
+      min-height: 40px;
+      margin-bottom: 18px;
+      padding-left: 62px;
+    }
+
+    .numbered li::before {
+      counter-increment: steps;
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: -2px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .cta-block {
+      margin: 38px 0 78px;
+      padding: 34px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #fff8f1 0%, #fde6d8 100%);
+      border: 1px solid rgba(184,90,51,0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px 22px;
+      margin-top: 22px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .field {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(30,40,51,0.10);
+      background: rgba(255,255,255,0.76);
+      font-size: 14px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    .footer-note {
+      padding: 0 0 42px;
+      text-align: center;
+      color: var(--muted);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-card, .grid-2, .fields {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">AI Chief of Staff Implementation</div>
+        <div class="badge">Australia • Founder-Led Agencies • Done-for-You Project</div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-copy">
+          <span class="eyebrow">Done-for-You Implementation</span>
+          <h1>Your agency does not need more founder juggling. It needs an AI Chief of Staff.</h1>
+          <p>We design and implement a personalised AI Chief of Staff system for founder-led agencies, so follow-up, coordination, task flow, and execution no longer depend on you catching every ball yourself.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#apply">Apply for a Chief of Staff Implementation</a>
+            <a class="btn btn-secondary" href="#implementation">See What the Implementation Includes</a>
+          </div>
+          <p class="micro">Built for agencies that are growing, but still too dependent on the founder to route work, chase follow-up, and keep execution moving.</p>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="panel-card">
+            <strong>Buyer</strong>
+            <p>Founder-led agencies where the founder still acts as the operating layer across communication, follow-up, and team movement.</p>
+          </div>
+          <div class="panel-card">
+            <strong>Offer</strong>
+            <p>A done-for-you implementation project that designs and deploys a personalised AI Chief of Staff system around your actual workflows.</p>
+          </div>
+          <div class="panel-card">
+            <strong>Revenue Model</strong>
+            <p>Scoped implementation first. Optional monthly optimisation and maintenance second. Separate charges, different value layers.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <div class="grid-2">
+        <article class="card">
+          <h2>Your founder role becomes a bottleneck when too much of the business still runs through you.</h2>
+          <p>At first, it works because you are close to everything. Then growth adds complexity.</p>
+          <p>More messages. More follow-up. More team coordination. More internal handoffs. More client movement.</p>
+          <p>And without meaning to, you become the operating layer for the whole agency.</p>
+        </article>
+        <article class="card">
+          <h3>What that usually looks like</h3>
+          <ul>
+            <li>You are the inbox router</li>
+            <li>You are the follow-up engine</li>
+            <li>You are the status checker</li>
+            <li>You are the person who remembers what still needs to happen</li>
+            <li>Execution quality drops whenever your attention gets overloaded</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid-2">
+        <article class="card">
+          <h2>This is not a chatbot problem. It is a Chief of Staff problem.</h2>
+          <p>You do not need another disconnected tool. You do not need generic AI prompts. You do not need a vague automation promise.</p>
+          <p>You need a system that behaves like a Chief of Staff across the right workflows: routing, follow-up, reminders, approvals, handoffs, and visibility.</p>
+        </article>
+        <article class="card">
+          <h3>Why the framing matters</h3>
+          <ul>
+            <li>The pain is already understood by the buyer</li>
+            <li>The service is easier to value than generic “AI development”</li>
+            <li>The implementation can be scoped around real founder bottlenecks</li>
+            <li>The page sells an outcome layer, not a technology category</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="implementation">
+      <div class="grid-2">
+        <article class="card">
+          <h2>What we implement</h2>
+          <p>We build a personalised AI Chief of Staff system around your actual operating reality, not a generic template.</p>
+          <p>Depending on fit, the implementation can cover inbox triage, follow-up and coordination workflows, task routing, reminder logic, status visibility, founder approvals, escalation rules, and handoff logic across people and tools.</p>
+        </article>
+        <article class="card">
+          <h3>What you are paying for</h3>
+          <ul>
+            <li>Workflow mapping</li>
+            <li>Founder bottleneck diagnosis</li>
+            <li>System design and personalisation</li>
+            <li>Implementation and setup</li>
+            <li>Testing and refinement</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid-2">
+        <article class="card">
+          <h2>Why this is a done-for-you implementation, not software access</h2>
+          <p>Every founder runs differently. Every agency has different delivery rhythms, team habits, approval rules, and client flow.</p>
+          <p>The value is in diagnosing where founder dependency lives, designing the right operating logic, personalising the system around your workflows, and implementing it cleanly.</p>
+        </article>
+        <article class="card">
+          <h3>How the engagement works</h3>
+          <ul>
+            <li>First step: one-off <strong>Chief of Staff Implementation Project</strong></li>
+            <li>Second step: optional monthly managed optimisation and maintenance</li>
+            <li>The two are separate, not bundled into one vague recurring fee</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid-2">
+        <article class="card">
+          <h2>What the implementation should change</h2>
+          <p>The point is not to make your business look more technical. The point is to make it less dependent on you for every operational touchpoint.</p>
+          <ul>
+            <li>Reduced founder bottlenecks</li>
+            <li>More consistent execution</li>
+            <li>Fewer dropped follow-ups</li>
+            <li>Better internal coordination</li>
+            <li>Stronger pipeline and delivery momentum</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>This is a strong fit if</h3>
+          <ul>
+            <li>You run a founder-led agency</li>
+            <li>Too much coordination still flows through you</li>
+            <li>Your team needs more operating structure without immediate additional hiring</li>
+            <li>Follow-up and execution quality drop when you get overloaded</li>
+            <li>You are open to paying for a properly designed implementation</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <article class="card">
+        <h2>How the implementation starts</h2>
+        <ol class="numbered">
+          <li>Apply with a few details about your agency, tools, and where you are still the bottleneck.</li>
+          <li>We review whether your business is a fit for a Chief of Staff implementation.</li>
+          <li>If the fit is right, we scope the project around your actual operating pressure points.</li>
+          <li>Approved buyers move into a done-for-you implementation engagement.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section id="apply" class="cta-block">
+      <h2>Apply for a Chief of Staff Implementation</h2>
+      <p>We are looking for founder-led agencies in Australia that have reached the point where the founder is still acting as the coordination layer for too much of the business.</p>
+      <p>If that sounds like your agency, apply for a scoped implementation conversation.</p>
+
+      <div class="fields">
+        <div class="field">What does your agency do?</div>
+        <div class="field">How many people are on the team?</div>
+        <div class="field">Where are you still the bottleneck today?</div>
+        <div class="field">What tools do you currently use to manage communication, tasks, and follow-up?</div>
+        <div class="field full">Are you looking for implementation only, or implementation plus ongoing managed support?</div>
+      </div>
+
+      <div class="cta-row" style="margin-top: 24px;">
+        <a class="btn btn-primary" href="#">Apply for a Chief of Staff Implementation</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-note">
+    Preview only. Final live page can connect this CTA to a real application form or scheduling flow.
+  </footer>
+</body>
+</html>
