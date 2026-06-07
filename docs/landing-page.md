@@ -1,117 +1,225 @@
 # Landing Page
 
-Status: v1 business-case structure
+Status: final copy direction for Chief of Staff implementation
 
-## Page goal
+## Purpose
 
-Validate whether owner-led B2B agencies and consultancies will pay for a `pipeline reactivation sprint` that recovers warm leads lost to inconsistent follow-up.
+This page is designed to sell a done-for-you `AI Chief of Staff` implementation project to founder-led agencies in Australia.
 
-The page should sell the workflow result, not AI capability.
+The page should move qualified buyers into a scoped implementation conversation.
 
-## Core message
+## Final positioning
 
-We help agency founders recover warm opportunities that have gone quiet, using a controlled follow-up workflow with human review.
+- market: Australia
+- buyer: founder-led agencies
+- packaging: `AI Chief of Staff`
+- actual offer: done-for-you implementation project
+- optional second offer: monthly managed optimisation / maintenance
+- CTA: `Apply for a Chief of Staff Implementation`
 
-## Structure v1
+## Final landing page copy
 
-## 1. Hero
+### Hero
 
-Headline shape:
+**Headline**
 
-Recover warm deals that went cold because follow-up slipped.
+Your agency does not need more founder juggling. It needs an AI Chief of Staff.
 
-Subhead shape:
+**Subheadline**
 
-For owner-led agencies and consultancies with stale leads sitting in CRM, email, or proposal follow-up. We run a controlled reactivation sprint to turn forgotten opportunities into qualified replies and booked conversations.
+We design and implement a personalised AI Chief of Staff system for founder-led agencies, so follow-up, coordination, task flow, and execution no longer depend on you catching every ball yourself.
 
-Primary CTA:
+**Primary CTA**
 
-Apply for a paid pilot
+Apply for a Chief of Staff Implementation
 
-## 2. Who this is for
+**Secondary CTA**
 
-Make the buyer explicit:
+See What the Implementation Includes
 
-- founder-led agency
-- founder-led consultancy
-- high-ticket service sales
-- warm pipeline already exists
-- follow-up is inconsistent because delivery work takes over
+**Support line**
 
-## 3. Pain section
+Built for founder-led agencies that are growing, but still too dependent on the founder to route work, chase follow-up, and keep execution moving.
 
-Name the workflow pain in buyer language:
+### Pain section
 
-- leads go cold after inquiry
-- proposals get sent but never chased properly
-- follow-up depends on founder memory
-- CRM does not reflect what actually needs attention
-- revenue leaks from already-generated demand
+**Section headline**
 
-## 4. Offer section
+Your founder role becomes a bottleneck when too much of the business still runs through you.
 
-Present the bounded task cluster:
+**Body copy**
 
-- identify stale warm opportunities
-- prioritize which ones are still worth chasing
-- draft and run follow-up messages with approval
-- track replies, meetings, and dead deals
+At first, it works because you are close to everything.
 
-Keep the frame on controlled workflow execution, not "autonomous agents."
+Then growth adds complexity.
 
-## 5. Outcome section
+More messages.
+More follow-up.
+More team coordination.
+More internal handoffs.
+More client movement.
 
-Promise a concrete result category:
+And without meaning to, you become the operating layer for the whole agency.
 
-- more qualified replies
-- more booked follow-up conversations
-- cleaner pipeline visibility
+You are the inbox router.
+You are the follow-up engine.
+You are the status checker.
+You are the person who remembers what still needs to happen.
 
-Do not promise full automation.
-Do not promise guaranteed closed revenue.
+The problem is not lack of effort.
+The problem is that the business still depends on your manual coordination to keep moving.
 
-## 6. How the pilot works
+### Reframe section
 
-Four simple steps:
+**Section headline**
 
-1. Share a stale pipeline export.
-2. We identify and prioritize recoverable leads.
-3. We prepare and run the follow-up sprint with your approval.
-4. You review replies, booked calls, and outcome data.
+This is not a chatbot problem. It is a Chief of Staff problem.
 
-## 7. Risk-reversal section
+**Body copy**
 
-Reduce early trust friction:
+You do not need another disconnected tool.
+You do not need generic AI prompts.
+You do not need a vague automation promise.
 
-- human-reviewed messaging
-- limited initial scope
-- no full system rebuild
-- no long-term contract in v1
+You need a system that behaves like a Chief of Staff across the right workflows:
 
-## 8. CTA section
+- routing
+- follow-up
+- reminders
+- approvals
+- handoffs
+- visibility
 
-CTA goal:
+That is what we design and implement for you.
 
-Collect paid-pilot interest, not general curiosity.
+### Implementation section
 
-Form intent:
+**Section headline**
 
-- volume of stale leads
-- average deal size range
-- current follow-up process
-- willingness to run a paid sprint
+What we implement
 
-## Copy rules
+**Body copy**
 
-- use revenue language, not AI language
-- speak to missed follow-up, not broad automation
-- keep the page anchored to one workflow only
-- keep the CTA tied to a paid pilot
+We build a personalised AI Chief of Staff system around your actual operating reality, not a generic template.
 
-## Proof still needed
+Depending on fit, the implementation can cover:
 
-Before final copy, validate:
+- inbox and communication triage
+- follow-up and coordination workflows
+- task routing and reminder logic
+- status visibility across moving work
+- founder approvals and escalation rules
+- handoff logic across people, tools, and stages
 
-- which wording resonates more: `recover warm leads` vs `reactivate stale pipeline`
-- whether buyer responds better to `paid pilot` or `14-day sprint`
-- whether the first CTA should be application-first or payment-first
+The goal is not to mimic a futuristic AI fantasy.
+The goal is to reduce the number of operational moving parts that still depend on you personally.
+
+### Why done-for-you section
+
+**Section headline**
+
+Why this is a done-for-you implementation, not software access
+
+**Body copy**
+
+Every founder runs differently.
+Every agency has different delivery rhythms, team habits, approval rules, and client flow.
+
+That is why this is not an off-the-shelf product pitch.
+
+The value is in:
+
+- diagnosing where founder dependency actually lives
+- designing the right operating logic
+- personalising the system around your workflows
+- implementing it cleanly
+- refining it against real usage
+
+### Offer structure section
+
+**Section headline**
+
+How the engagement works
+
+**Body copy**
+
+The first step is a `Chief of Staff Implementation Project`.
+
+This is a one-off scoped engagement that covers:
+
+- workflow mapping
+- bottleneck diagnosis
+- system design
+- implementation and setup
+- testing and refinement
+
+After that, if needed, there is a separate optional `Managed Optimisation / Maintenance` fee for ongoing tuning, monitoring, fixes, and improvements.
+
+### Outcome section
+
+**Section headline**
+
+What the implementation should change
+
+**Body copy**
+
+The point is not to make your business look more technical.
+
+The point is to make it less dependent on you for every operational touchpoint.
+
+Expected outcomes include:
+
+- reduced founder bottlenecks
+- more consistent execution
+- fewer dropped follow-ups
+- better internal coordination
+- stronger pipeline and delivery momentum
+
+We do not promise zero oversight.
+We do not promise a fully autonomous business.
+We do promise a more structured operating system than founder memory and manual chasing.
+
+### Fit section
+
+**Section headline**
+
+This is a strong fit if
+
+- you run a founder-led agency
+- too much coordination still flows through you
+- your team needs more operating structure without immediate additional hiring
+- follow-up and execution quality drop when you get overloaded
+- you are open to paying for a properly designed implementation instead of trying to stitch tools together yourself
+
+### CTA section
+
+**Section headline**
+
+Apply for a Chief of Staff Implementation
+
+**Body copy**
+
+We are looking for founder-led agencies in Australia that have reached the point where the founder is still acting as the coordination layer for too much of the business.
+
+If that sounds like your agency, apply for a scoped implementation conversation.
+
+**Button**
+
+Apply for a Chief of Staff Implementation
+
+**Application fields**
+
+- What does your agency do?
+- How many people are on the team?
+- Where are you still the bottleneck today?
+- What tools do you currently use to manage communication, tasks, and follow-up?
+- Are you looking for implementation only, or implementation plus ongoing managed support?
+
+## Copy guardrails
+
+- keep the page in English only
+- use Australian spelling where natural
+- keep `Chief of Staff` as the buyer-facing packaging
+- keep `done-for-you implementation` as the actual offer
+- avoid generic AI agency language
+- avoid broad product claims
