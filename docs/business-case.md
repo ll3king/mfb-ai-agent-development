@@ -1,111 +1,173 @@
 # Business Case
 
-Status: v1 narrowed
+Status: v3 aligned to Chief of Staff implementation model
 
-## Recommended workflow
+## Lead source
 
-`sales follow-up`
+Source type: upstream AI business lead
 
-## Why this workflow first
+Reference:
 
-This is the strongest first validation candidate because it is closest to revenue, easy to explain without AI education, and can be delivered manually before any product exists.
+- Dan Martell positions `AI Agent Development` as a high-upside category because it can behave like a virtual employee layer and attack labour-cost bottlenecks.
 
-Compared with the other workflow candidates:
+## Core translation
 
-- it has clearer buyer willingness to pay because missed follow-up means missed deals
-- it is easier to validate by hand from a CRM export or inbox
-- it is easier to write into a landing page around business outcome
-- it supports a simple first paid signal: pay to recover stale opportunities already in pipeline
+We are not selling `AI agents` as a category.
+
+We are selling a done-for-you implementation service that designs and deploys a personalised `AI Chief of Staff` system for founder-led agencies.
+
+## What the buyer is actually paying for
+
+Primary revenue model:
+
+- `Chief of Staff Implementation Project`
+
+Secondary revenue model:
+
+- optional `Managed Optimisation / Maintenance` monthly fee
+
+These are separate charges, not one bundled subscription.
 
 ## Buyer
 
-Owner-led B2B agencies and consultancies selling high-ticket services.
+Founder-led agencies.
 
-## Painful workflow
+## Why this buyer first
 
-Leads, past proposals, and warm conversations go cold because follow-up is inconsistent, delayed, or never happens.
+This is the strongest first buyer because:
 
-The buyer does not need "an AI agent."
-The buyer needs more qualified replies and more booked conversations from leads they already paid to acquire.
+- the founder is often the coordination bottleneck
+- revenue, delivery, and internal follow-up are tightly linked
+- the buyer usually controls the decision directly
+- the value of reduced founder dependency is easy to understand
+- a done-for-you implementation model is easier to sell than software access
 
-## Bounded task cluster
+## Core pain
 
-Start with stale warm pipeline follow-up:
+The founder becomes the operating layer for too many things:
 
-1. Identify leads with no reply after inquiry, proposal, or discovery call.
-2. Review notes, emails, and deal context.
-3. Draft the next follow-up message with a clear reason to reply.
-4. Queue or send the follow-up with human approval.
-5. Mark outcomes: replied, booked, closed-lost, no fit, no response.
+- inbox routing
+- internal coordination
+- follow-up nudging
+- project visibility
+- task chasing
+- context switching
 
-This is bounded enough to run manually and narrow enough to sell as a workflow result.
+The real pain is not "I need AI."
+The real pain is:
 
-## Workflow result being sold
+`my agency still depends on me to catch, route, push, and follow through too many moving parts`
 
-We help agency founders recover warm deals that are currently being lost to follow-up gaps.
+## Why `Chief of Staff` is the right packaging
 
-The result is not "automation."
-The result is more sales conversations from an underworked pipeline.
+The phrase `Chief of Staff` works because it expresses a pain the buyer already understands:
 
-## Manual-first offer shape
+- too much coordination still runs through the founder
+- important things slip when the founder gets overloaded
+- growth starts to hit a founder bottleneck
 
-Offer a `14-day pipeline reactivation sprint`.
+This framing is stronger than:
 
-Inputs:
+- AI automation agency
+- AI workflow studio
+- generic AI assistant
+- agent development service
 
-- stale leads list from CRM or spreadsheet
-- recent conversation context
-- founder approval on tone and exclusions
+## What is actually being implemented
 
-Delivery:
+The implementation is a personalised workflow system that can cover the right mix of:
 
-- prioritize stale opportunities
-- prepare follow-up messages
-- run a controlled reactivation sequence with human approval
-- return a simple outcome report
+- inbox and communication triage
+- follow-up and coordination workflows
+- reminder and task-routing logic
+- project-status visibility
+- founder approvals and escalation rules
+- handoff logic across team members and tools
 
-## Why this should get paid attention
+## What this is not
 
-- Revenue pain is easier to fund than generic productivity pain.
-- The buyer already understands the cost of a lead going cold.
-- The workflow can be tested without system integration or product build.
-- Human oversight reduces trust risk for an early paid pilot.
+It is not:
 
-## Why not start with the other candidates
+- a broad AI product
+- a generic chatbot
+- a multi-agent platform
+- a promise to replace a full human operations team overnight
 
-- `lead qualification`: good second option, but the value is often one step further from revenue than recovering already-warm deals.
-- `customer support triage`: real pain, but more likely to be treated as a platform feature or internal cost project.
-- `document processing`: crowded and easier to commoditize.
-- `internal knowledge retrieval`: weak first paid signal and high native-model risk.
-- `quote generation`: strong pain in some verticals, but needs a tighter industry wedge before landing-page validation.
-- `CRM update support`: useful but weak as a standalone paid painkiller.
-- `reporting support`: helpful but often seen as nice-to-have.
-- `inbox triage`: painful but usually not tied tightly enough to revenue for a first paid test.
+It is a done-for-you implementation around specific founder bottlenecks.
+
+## Why done-for-you is the correct day-one model
+
+Done-for-you implementation is the best first revenue model because:
+
+- every founder has different operating habits
+- every agency has different delivery rhythm and follow-up logic
+- off-the-shelf tools do not capture this well
+- the buyer is paying for design, personalisation, setup, and workflow judgement
+- manual service validation comes before productisation
+
+## Value promise
+
+The value is not sold as "save time" alone.
+
+The value is sold as:
+
+- reduce founder bottlenecks
+- improve execution consistency
+- protect pipeline and delivery momentum
+- make the business less dependent on the founder manually holding everything together
+
+## Offer structure
+
+### 1. Chief of Staff Implementation Project
+
+One-off scoped engagement covering:
+
+- workflow mapping
+- founder bottleneck diagnosis
+- design of the AI Chief of Staff operating logic
+- implementation and setup
+- testing and refinement
+
+### 2. Managed Optimisation / Maintenance
+
+Optional monthly service covering:
+
+- tuning
+- updates
+- prompt and process refinement
+- edge-case fixes
+- monitoring and workflow improvements
 
 ## Model company risk filter
 
-Generic follow-up drafting can be absorbed by model companies or CRMs.
+The defensible value is not "AI assistant output."
 
-The defensible layer is not the model output itself. It is:
+The defensible value is:
 
-- workflow ownership
-- pipeline cleanup and prioritization
-- message sequencing
-- human review
-- outcome accountability
-- buyer-specific sales context
+- workflow design
+- agency-specific operating logic
+- cross-tool implementation
+- founder-specific personalisation
+- approvals and handoff controls
+- business accountability for execution
 
-## First paid validation direction
+## Minimum Money Test logic
 
-Sell a small paid pilot before building anything:
+The first test should not be software access.
 
-- fixed-scope reactivation sprint
-- limited number of stale leads
-- clear reply / booking target
-- manual or semi-manual delivery
+The first test should be:
 
-## Initial success metric
+- can founder-led agencies understand this as a painful need?
+- can they see themselves in the bottleneck narrative?
+- will they apply for a done-for-you implementation?
+- will at least one qualified buyer move to a paid implementation conversation?
 
-A strong first signal is not traffic or compliments.
+## Initial success signal
 
-A strong first signal is a buyer agreeing to pay for a controlled reactivation sprint against a defined stale pipeline segment.
+A strong first signal is not page traffic.
+
+A strong first signal is:
+
+- a qualified founder-led agency applies
+- the buyer confirms the founder-bottleneck pain is real
+- the buyer is open to a scoped implementation project before asking for software
