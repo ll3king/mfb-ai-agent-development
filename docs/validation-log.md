@@ -1,73 +1,79 @@
 # Validation Log
 
-Status: v1 first paid signal defined
+Status: v3 aligned to Chief of Staff implementation model
 
-## Current validation target
+## Current positioning
 
-Workflow: `sales follow-up`
+Reference lead:
 
-Buyer: owner-led B2B agencies and consultancies
+- Dan Martell's `AI Agent Development` category thesis
 
-Offer: `14-day pipeline reactivation sprint`
+Translated business model:
 
-## First paid signal v1
+- buyer: founder-led agencies
+- packaging: `AI Chief of Staff`
+- primary offer: done-for-you implementation project
+- secondary offer: optional monthly managed optimisation / maintenance
+
+## Primary validation question
+
+Will founder-led agencies respond to `Chief of Staff` bottleneck language strongly enough to enter a scoped implementation conversation?
+
+## First paid signal
 
 The minimum paid signal is:
 
-A target buyer agrees to pay for a fixed-scope sprint to reactivate a limited stale pipeline segment before any product is built.
+A qualified founder-led agency agrees to a paid `Chief of Staff Implementation Project` before asking for software access.
 
-## Signal design
+## What the landing page is validating
 
-Pilot shape:
+The page is validating:
 
-- one buyer
-- one stale pipeline segment
-- up to 25 stale warm leads
-- 14-day sprint
-- manual or semi-manual delivery
-
-Suggested price test:
-
-- target paid pilot: USD 300 to USD 750 upfront
-
-Why this range:
-
-- high enough to reject casual interest
-- low enough to reduce pilot friction
-- still real enough to prove workflow pain
+- whether the founder-bottleneck narrative resonates
+- whether `Chief of Staff` is strong enough buyer-facing packaging
+- whether the buyer understands this as a done-for-you implementation service
+- whether the buyer is open to a scoped project first and managed service second
 
 ## What counts as success
 
 Minimum success:
 
-- at least one buyer says yes to a paid sprint conversation
-- at least one buyer accepts the pilot scope and price logic
+- qualified agency founders apply
+- they recognise the bottleneck as real
+- they understand the page as an implementation offer, not a generic AI tool
 
 Stronger success:
 
-- one buyer prepays for the sprint
-- buyer provides pipeline export and approval to start
+- one qualified buyer asks to scope the implementation
+- one qualified buyer accepts the implementation project structure
+- one qualified buyer is open to optional monthly optimisation after setup
 
 ## What does not count
 
-- compliments on the idea
-- free discovery calls with no price discussion
-- "interested later"
-- requests for software before paying for the workflow result
+- curiosity about AI agents in general
+- compliments on the page
+- software feature requests from unqualified buyers
+- broad inbound with no founder-bottleneck pain
+- interest only in a low-cost software subscription
 
 ## Kill / revise conditions
 
-Revise the offer if repeated conversations show:
+Revise the model if repeated conversations show:
 
-- buyer wants general lead generation, not stale-pipeline follow-up
-- buyer refuses to pay before seeing free work
-- buyer cannot provide enough stale warm leads
-- buyer understands the pain but does not value the result enough to fund a sprint
+- buyers like the `Chief of Staff` language but do not want implementation help
+- buyers want software access but do not value done-for-you setup
+- buyers cannot clearly connect the bottleneck to time, execution, or revenue cost
+- agency founders do not recognise themselves in the pain framing
 
-## Immediate next validation step
+## Current validation path
 
-Use the landing page to test whether the `paid reactivation sprint` framing creates real paid-pilot conversations.
+1. Publish the founder-led agency landing page.
+2. Drive qualified traffic or direct outreach to the page.
+3. Review inbound applications for founder-bottleneck fit.
+4. Move qualified applicants into a scoped implementation conversation.
+5. Validate willingness to pay for the project before discussing broader productisation.
 
 | Date | Action | Signal | Interpretation | Next Step |
 | --- | --- | --- | --- | --- |
-| 2026-05-27 | Narrowed workflow to sales follow-up for owner-led B2B agencies and consultancies | Clearer buyer, clearer pain, simpler paid pilot design | Strongest first Money First path among current candidates | Write landing page around paid reactivation sprint and test for paid-pilot responses |
+| 2026-05-27 | Narrowed the project to a sales follow-up wedge | Clearer buyer and simpler manual-first validation path | Useful demand-learning step, but too narrow for the final business model | Reassess the broader monetisation logic |
+| 2026-06-07 | Reframed the business around founder bottlenecks packaged as `AI Chief of Staff` | Stronger buyer-facing pain language and better fit for done-for-you implementation | The page should sell implementation, not software access | Finalise landing page and test qualified implementation interest |
