@@ -1,472 +1,898 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Chief of Staff Implementation</title>
+  <title>The Last Bottleneck in Your Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3eee6;
-      --surface: rgba(255, 251, 245, 0.84);
-      --ink: #1e2833;
-      --muted: #586675;
-      --line: rgba(30, 40, 51, 0.12);
-      --accent: #b85a33;
-      --accent-deep: #7a3015;
-      --accent-soft: #f3d9cb;
-      --teal: #1f4d4a;
-      --teal-soft: #d5e7e4;
-      --shadow: 0 24px 60px rgba(30, 40, 51, 0.11);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --max: 1180px;
+      --bg: #07100c;
+      --surface: #0d1713;
+      --surface-2: #111d18;
+      --surface-3: #16241e;
+      --paper: #f1ede5;
+      --ink: #171512;
+      --text: #edf1ea;
+      --muted: rgba(237, 241, 234, 0.72);
+      --muted-2: rgba(237, 241, 234, 0.58);
+      --muted-dark: #5b554b;
+      --line: rgba(207, 147, 95, 0.18);
+      --line-strong: rgba(207, 147, 95, 0.34);
+      --accent: #cf935f;
+      --accent-deep: #8d5f39;
+      --max: 1240px;
+      --radius-shell: 24px;
+      --radius-card: 18px;
+      --shadow-soft: 0 28px 90px rgba(0, 0, 0, 0.34);
+      --shadow-card: 0 16px 34px rgba(0, 0, 0, 0.18);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.56;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(184, 90, 51, 0.10), transparent 30%),
-        radial-gradient(circle at top right, rgba(31, 77, 74, 0.14), transparent 22%),
-        linear-gradient(180deg, #faf7f2 0%, var(--bg) 100%);
+        radial-gradient(circle at top left, rgba(207, 147, 95, 0.18), transparent 22%),
+        radial-gradient(circle at 84% 8%, rgba(18, 60, 45, 0.32), transparent 18%),
+        linear-gradient(180deg, #08110d 0%, #06100b 100%);
     }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
 
     .wrap {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
-    .hero { padding: 28px 0 72px; }
-
-    .topbar {
+    .brand-line {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 0 24px;
-      font-family: "Helvetica Neue", Arial, sans-serif;
+      align-items: end;
+      gap: 18px;
+      padding: 24px 0 22px;
     }
 
-    .brand {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--teal);
-    }
-
-    .badge {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(31, 77, 74, 0.16);
-      font-size: 12px;
-      color: var(--muted);
-      font-family: "Helvetica Neue", Arial, sans-serif;
-    }
-
-    .hero-card {
+    .brand-mark {
       display: grid;
-      grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
-      gap: 28px;
-      padding: 36px;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
+      gap: 6px;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 18px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent-deep);
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 700;
+    .brand-mark strong {
+      color: var(--paper);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
     }
 
-    h1,h2,h3 {
-      margin: 0 0 16px;
-      line-height: 1.02;
-      font-weight: 600;
+    .brand-mark span {
+      max-width: 42ch;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .hero-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-shell);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(12, 20, 17, 0.96), rgba(8, 14, 11, 0.99));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+      min-height: min(100dvh, 760px);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 46px 42px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(90deg, rgba(8, 13, 11, 0.98) 0%, rgba(8, 13, 11, 0.86) 72%, rgba(8, 13, 11, 0.18) 100%);
+    }
+
+    .overline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .overline::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 0.94;
+      text-wrap: balance;
     }
 
     h1 {
-      font-size: clamp(50px, 7vw, 84px);
-      max-width: 10ch;
+      max-width: 10.4ch;
+      font-size: clamp(48px, 6vw, 74px);
+      color: var(--paper);
     }
 
-    h2 {
-      font-size: clamp(34px, 4.5vw, 54px);
-      max-width: 13ch;
+    .hero-body {
+      max-width: 29ch;
+      margin-top: 18px;
+      color: rgba(237, 241, 234, 0.84);
+      font-size: 18px;
+      line-height: 1.56;
     }
 
-    h3 {
-      font-size: 24px;
-      color: var(--teal);
-    }
-
-    p {
-      margin: 0 0 16px;
+    .hero-proof {
+      max-width: 34ch;
+      margin-top: 16px;
       color: var(--muted);
-      font-size: 19px;
+      font-size: 14px;
+      line-height: 1.58;
     }
 
-    .cta-row {
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 248, 238, 0.03);
+      color: rgba(237, 241, 234, 0.8);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin: 28px 0 18px;
+      margin-top: 30px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
+      min-height: 54px;
+      padding: 0 24px;
       border-radius: 999px;
       text-decoration: none;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      font-weight: 700;
-      transition: transform 140ms ease;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      transition: transform 140ms ease, background 140ms ease;
     }
 
     .btn:hover { transform: translateY(-1px); }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
-      color: #fff;
-      box-shadow: 0 14px 30px rgba(122, 48, 21, 0.24);
+      background: var(--accent);
+      color: #fff8f2;
+      box-shadow: 0 14px 28px rgba(141, 95, 57, 0.28);
     }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.76);
-      border: 1px solid rgba(30, 40, 51, 0.10);
-      color: var(--teal);
+    .hero-visual-command {
+      position: relative;
+      min-width: 0;
     }
 
-    .micro {
-      font-family: "Helvetica Neue", Arial, sans-serif;
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      filter: brightness(0.74) contrast(1.08) saturate(0.95);
+    }
+
+    .hero-visual-command::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(7, 10, 9, 0.12), rgba(7, 10, 9, 0.44)),
+        linear-gradient(90deg, rgba(8, 13, 11, 0.04), rgba(8, 13, 11, 0) 40%);
+      z-index: 1;
+    }
+
+    .command-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .node {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(237, 241, 234, 0.84);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .node::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(237, 241, 234, 0.6);
+      box-shadow: 0 0 0 6px rgba(237, 241, 234, 0.06);
+      flex: 0 0 auto;
+    }
+
+    .node-source-1 { top: 124px; left: 72px; }
+    .node-source-2 { top: 232px; left: 58px; }
+    .node-source-3 { top: 340px; left: 80px; }
+
+    .routing-lane {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(237, 241, 234, 0.14), rgba(237, 241, 234, 0.42));
+      transform-origin: left center;
+    }
+
+    .lane-1 { top: 136px; left: 176px; width: 210px; transform: rotate(8deg); }
+    .lane-2 { top: 244px; left: 162px; width: 228px; transform: rotate(1deg); }
+    .lane-3 { top: 352px; left: 184px; width: 210px; transform: rotate(-8deg); }
+
+    .route-tag,
+    .exception-tag {
+      position: absolute;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(237, 241, 234, 0.12);
+      background: rgba(8, 13, 11, 0.5);
+      color: rgba(237, 241, 234, 0.78);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .route-tag { top: 276px; left: 224px; }
+
+    .exception-tag {
+      top: 220px;
+      right: 284px;
+      border-color: rgba(207, 147, 95, 0.28);
+      color: var(--paper);
+    }
+
+    .choke-knot {
+      position: absolute;
+      top: 230px;
+      right: 272px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(207, 147, 95, 0.42);
+      background: radial-gradient(circle, rgba(207, 147, 95, 0.18), rgba(8, 13, 11, 0.76));
+      box-shadow: 0 0 0 10px rgba(207, 147, 95, 0.06);
+    }
+
+    .exception-lane {
+      position: absolute;
+      top: 250px;
+      right: 196px;
+      width: 124px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(207, 147, 95, 0.86), rgba(237, 241, 234, 0.26));
+      transform: rotate(-12deg);
+      transform-origin: left center;
+    }
+
+    .escalation-gate {
+      position: absolute;
+      top: 210px;
+      right: 80px;
+      width: 210px;
+      padding: 16px 18px;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(207, 147, 95, 0.46);
+      background: rgba(11, 17, 14, 0.64);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 0 1px rgba(207, 147, 95, 0.14), 0 0 24px rgba(207, 147, 95, 0.18);
+    }
+
+    .escalation-gate strong {
+      display: block;
+      color: var(--paper);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .escalation-gate span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(237, 241, 234, 0.8);
       font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .exception-pulse {
+      position: absolute;
+      top: 274px;
+      right: 296px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(207, 147, 95, 0.34);
+      animation: pulse 2.6s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(207, 147, 95, 0.34); }
+      70% { box-shadow: 0 0 0 14px rgba(207, 147, 95, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(207, 147, 95, 0); }
+    }
+
+    .founder-anchor {
+      position: absolute;
+      right: 82px;
+      bottom: 120px;
+      padding: 14px 16px;
+      border-top: 1px solid rgba(207, 147, 95, 0.3);
+      background: rgba(8, 13, 11, 0.54);
+      color: rgba(237, 241, 234, 0.88);
+      font-size: 13px;
+      line-height: 1.48;
+      max-width: 230px;
+      backdrop-filter: blur(8px);
+    }
+
+    .founder-anchor strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--paper);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-light {
+      padding: 88px 0;
+      background:
+        radial-gradient(circle at top left, rgba(207, 147, 95, 0.08), transparent 22%),
+        linear-gradient(180deg, #f3eee6 0%, #ece4d7 100%);
+      color: var(--ink);
+    }
+
+    .section-dark {
+      padding: 88px 0;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(207, 147, 95, 0.18), transparent 18%),
+        linear-gradient(180deg, #0a1310 0%, #08110d 100%);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-label {
+      margin-bottom: 14px;
+      color: #7a614a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-dark .section-label {
+      color: rgba(207, 147, 95, 0.86);
+    }
+
+    h2 {
+      max-width: 11ch;
+      font-size: clamp(42px, 5vw, 74px);
+      color: inherit;
+    }
+
+    .section-copy {
+      max-width: 46ch;
+      margin-top: 16px;
+      color: var(--muted-dark);
+      font-size: 18px;
+      line-height: 1.68;
+    }
+
+    .section-dark .section-copy {
       color: var(--muted);
     }
 
-    .hero-panel {
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      background: linear-gradient(180deg, rgba(31,77,74,0.98), rgba(21,57,55,0.96));
-      color: #f5f1eb;
+    .checklist,
+    .cost-list,
+    .mechanism-list,
+    .support-list {
       display: grid;
-      gap: 18px;
+      gap: 0;
     }
 
-    .hero-panel p { color: rgba(245,241,235,0.82); }
-
-    .panel-card {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
+    .check-item,
+    .cost-item,
+    .mechanism-item,
+    .support-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 14px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(24, 22, 20, 0.12);
+      align-items: start;
     }
 
-    .panel-card strong {
-      display: block;
-      margin-bottom: 8px;
-      color: #fff4ec;
-      font-family: "Helvetica Neue", Arial, sans-serif;
+    .section-dark .mechanism-item,
+    .section-dark .support-item {
+      border-top-color: rgba(207, 147, 95, 0.2);
+    }
+
+    .check-mark,
+    .cost-mark,
+    .mechanism-mark,
+    .support-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
       font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-weight: 800;
+      line-height: 1;
     }
 
-    section { padding: 0 0 28px; }
+    .check-mark,
+    .cost-mark {
+      background: rgba(207, 147, 95, 0.1);
+      color: var(--accent-deep);
+    }
 
-    .grid-2 {
+    .mechanism-mark,
+    .support-mark {
+      background: rgba(207, 147, 95, 0.14);
+      color: var(--accent);
+    }
+
+    .check-item span,
+    .cost-item span,
+    .mechanism-item span,
+    .support-item span {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .qualification-layout,
+    .contract-layout {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+      gap: 38px;
+      align-items: start;
+    }
+
+    .qualification-layout {
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+
+    .consequence-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .mechanism-layout {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .mechanism-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    .legend-pill {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(24, 22, 20, 0.12);
+      background: rgba(255, 248, 238, 0.58);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mechanism-kicker {
+      max-width: 46ch;
+      margin-top: 18px;
+      color: var(--muted-dark);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .included-card h3,
+    .excluded-card h3,
+    .cta-card h3 {
+      color: var(--paper);
+      font-size: 30px;
+    }
+
+    .included-card p,
+    .excluded-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    .flow-band {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+      margin-bottom: 26px;
+    }
+
+    .flow-step {
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(207, 147, 95, 0.18);
+      background: rgba(255, 248, 238, 0.04);
+      color: rgba(237, 241, 234, 0.86);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contract-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 22px;
     }
 
-    .card {
-      padding: 28px;
-      border-radius: var(--radius-lg);
-      background: rgba(255,255,255,0.74);
-      border: 1px solid var(--line);
-      box-shadow: 0 18px 40px rgba(30, 40, 51, 0.05);
+    .included-card,
+    .excluded-card,
+    .cta-card {
+      padding: 24px;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(207, 147, 95, 0.18);
+      background: rgba(255, 248, 238, 0.04);
+      box-shadow: var(--shadow-card);
     }
 
-    ul, ol {
-      margin: 0;
-      padding-left: 22px;
+    .decision-shell {
+      padding: 88px 0 96px;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(207, 147, 95, 0.18), transparent 18%),
+        linear-gradient(180deg, #09110d 0%, #06100b 100%);
     }
 
-    li {
-      margin: 0 0 12px;
+    .cta-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 34px;
+      padding: 34px;
+      border-radius: var(--radius-shell);
+      background: linear-gradient(180deg, rgba(13, 20, 17, 0.98), rgba(8, 13, 11, 0.98));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cta-card h2 {
+      max-width: 10ch;
+      color: var(--paper);
+      font-size: clamp(40px, 4.8vw, 70px);
+    }
+
+    .cta-copy {
+      max-width: 43ch;
+      margin-top: 16px;
       color: var(--muted);
       font-size: 18px;
+      line-height: 1.7;
     }
 
-    .numbered {
-      list-style: none;
-      padding: 0;
-      counter-reset: steps;
-    }
-
-    .numbered li {
-      position: relative;
-      min-height: 40px;
-      margin-bottom: 18px;
-      padding-left: 62px;
-    }
-
-    .numbered li::before {
-      counter-increment: steps;
-      content: counter(steps);
-      position: absolute;
-      left: 0;
-      top: -2px;
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--teal-soft);
-      color: var(--teal);
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      font-weight: 700;
-    }
-
-    .cta-block {
-      margin: 38px 0 78px;
-      padding: 34px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, #fff8f1 0%, #fde6d8 100%);
-      border: 1px solid rgba(184,90,51,0.12);
-      box-shadow: var(--shadow);
-    }
-
-    .fields {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 14px 22px;
-      margin-top: 22px;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-    }
-
-    .field {
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(30,40,51,0.10);
-      background: rgba(255,255,255,0.76);
-      font-size: 14px;
-    }
-
-    .field.full { grid-column: 1 / -1; }
-
-    .footer-note {
-      padding: 0 0 42px;
-      text-align: center;
-      color: var(--muted);
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      font-size: 13px;
-    }
-
-    @media (max-width: 900px) {
-      .hero-card, .grid-2, .fields {
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .consequence-layout,
+      .contract-layout,
+      .contract-grid,
+      .cta-card {
         grid-template-columns: 1fr;
       }
 
-      h1 { max-width: none; }
+      .hero-visual-command {
+        min-height: min(100dvh, 560px);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .brand-line {
+        align-items: start;
+      }
+
+      .hero-copy {
+        padding: 30px 22px 30px;
+      }
+
+      h1 {
+        max-width: 9.2ch;
+        font-size: clamp(48px, 16vw, 74px);
+      }
+
+      .hero-cta-row,
+      .flow-band {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .node-source-1 { top: 84px; left: 28px; }
+      .node-source-2 { top: 176px; left: 24px; }
+      .node-source-3 { top: 268px; left: 34px; }
+      .lane-1 { top: 96px; left: 110px; width: 132px; }
+      .lane-2 { top: 188px; left: 104px; width: 146px; }
+      .lane-3 { top: 280px; left: 116px; width: 134px; }
+      .route-tag { top: 212px; left: 134px; }
+      .exception-tag { top: 178px; right: 168px; }
+      .choke-knot {
+        top: 188px;
+        right: 164px;
+        width: 34px;
+        height: 34px;
+      }
+      .exception-lane {
+        top: 208px;
+        right: 110px;
+        width: 72px;
+      }
+      .escalation-gate {
+        top: 170px;
+        right: 20px;
+        width: 180px;
+      }
+      .exception-pulse {
+        top: 200px;
+        right: 176px;
+      }
+      .founder-anchor {
+        right: 20px;
+        bottom: 72px;
+        max-width: 184px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .btn {
+        transition: none;
+      }
+
+      .exception-pulse {
+        animation: none;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">AI Chief of Staff Implementation</div>
-        <div class="badge">Australia • Founder-Led Agencies • Done-for-You Project</div>
-      </div>
-
-      <div class="hero-card">
-        <div class="hero-copy">
-          <span class="eyebrow">Done-for-You Implementation</span>
-          <h1>Your agency does not need more founder juggling. It needs an AI Chief of Staff.</h1>
-          <p>We design and implement a personalised AI Chief of Staff system for founder-led agencies, so follow-up, coordination, task flow, and execution no longer depend on you catching every ball yourself.</p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#apply">Apply for a Chief of Staff Implementation</a>
-            <a class="btn btn-secondary" href="#implementation">See What the Implementation Includes</a>
-          </div>
-          <p class="micro">Built for agencies that are growing, but still too dependent on the founder to route work, chase follow-up, and keep execution moving.</p>
-        </div>
-
-        <aside class="hero-panel">
-          <div class="panel-card">
-            <strong>Buyer</strong>
-            <p>Founder-led agencies where the founder still acts as the operating layer across communication, follow-up, and team movement.</p>
-          </div>
-          <div class="panel-card">
-            <strong>Offer</strong>
-            <p>A done-for-you implementation project that designs and deploys a personalised AI Chief of Staff system around your actual workflows.</p>
-          </div>
-          <div class="panel-card">
-            <strong>Revenue Model</strong>
-            <p>Scoped implementation first. Optional monthly optimisation and maintenance second. Separate charges, different value layers.</p>
-          </div>
-        </aside>
+  <header id="hero-vnext2" class="wrap">
+    <div class="brand-line">
+      <div class="brand-mark">
+        <strong>Northbridge Operations</strong>
+        <span>Done-for-you Bottleneck Command Layer for founder-led Australian agencies.</span>
       </div>
     </div>
+
+    <section class="hero-shell" aria-label="The Last Bottleneck">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div>
+            <div class="overline">The Last Bottleneck</div>
+            <h1>Your Agency Still Runs Through You.</h1>
+            <p class="hero-body">We install a command layer so routine work stops reaching the founder.</p>
+            <div class="hero-proof">Done-for-you Bottleneck Command Layer for founder-led Australian agencies.</div>
+            <div class="chip-row">
+              <div class="chip">routing</div>
+              <div class="chip">follow-up</div>
+              <div class="chip">exceptions</div>
+            </div>
+            <div class="hero-cta-row">
+    </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-command">
+          <img class="hero-image" src="./assets/hero-command-center.jpg" alt="Founder bottleneck with inbound requests routed through normal lanes and only exception-only escalation reaching the founder judgment desk" />
+          <div class="command-overlay">
+            <div class="node node-source-1">inbox</div>
+            <div class="node node-source-2">handoffs</div>
+            <div class="node node-source-3">approvals</div>
+
+            <div class="routing-lane lane-1"></div>
+            <div class="routing-lane lane-2"></div>
+            <div class="routing-lane lane-3"></div>
+
+            <div class="route-tag">normal route</div>
+            <div class="exception-tag">founder only</div>
+            <div class="choke-knot"></div>
+            <div class="exception-lane"></div>
+
+            <div class="escalation-gate">
+              <strong>Escalation gate</strong>
+              <span>Only decisions with risk, ambiguity, or real client impact should rise here.</span>
+            </div>
+            <div class="exception-pulse"></div>
+
+            <div class="founder-anchor">
+              <strong>Founder anchor</strong>
+              The founder becomes the exception desk, not the general traffic handler.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </header>
 
-  <main class="wrap">
-    <section>
-      <div class="grid-2">
-        <article class="card">
-          <h2>Your founder role becomes a bottleneck when too much of the business still runs through you.</h2>
-          <p>At first, it works because you are close to everything. Then growth adds complexity.</p>
-          <p>More messages. More follow-up. More team coordination. More internal handoffs. More client movement.</p>
-          <p>And without meaning to, you become the operating layer for the whole agency.</p>
-        </article>
-        <article class="card">
-          <h3>What that usually looks like</h3>
-          <ul>
-            <li>You are the inbox router</li>
-            <li>You are the follow-up engine</li>
-            <li>You are the status checker</li>
-            <li>You are the person who remembers what still needs to happen</li>
-            <li>Execution quality drops whenever your attention gets overloaded</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <div class="grid-2">
-        <article class="card">
-          <h2>This is not a chatbot problem. It is a Chief of Staff problem.</h2>
-          <p>You do not need another disconnected tool. You do not need generic AI prompts. You do not need a vague automation promise.</p>
-          <p>You need a system that behaves like a Chief of Staff across the right workflows: routing, follow-up, reminders, approvals, handoffs, and visibility.</p>
-        </article>
-        <article class="card">
-          <h3>Why the framing matters</h3>
-          <ul>
-            <li>The pain is already understood by the buyer</li>
-            <li>The service is easier to value than generic “AI development”</li>
-            <li>The implementation can be scoped around real founder bottlenecks</li>
-            <li>The page sells an outcome layer, not a technology category</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section id="implementation">
-      <div class="grid-2">
-        <article class="card">
-          <h2>What we implement</h2>
-          <p>We build a personalised AI Chief of Staff system around your actual operating reality, not a generic template.</p>
-          <p>Depending on fit, the implementation can cover inbox triage, follow-up and coordination workflows, task routing, reminder logic, status visibility, founder approvals, escalation rules, and handoff logic across people and tools.</p>
-        </article>
-        <article class="card">
-          <h3>What you are paying for</h3>
-          <ul>
-            <li>Workflow mapping</li>
-            <li>Founder bottleneck diagnosis</li>
-            <li>System design and personalisation</li>
-            <li>Implementation and setup</li>
-            <li>Testing and refinement</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <div class="grid-2">
-        <article class="card">
-          <h2>Why this is a done-for-you implementation, not software access</h2>
-          <p>Every founder runs differently. Every agency has different delivery rhythms, team habits, approval rules, and client flow.</p>
-          <p>The value is in diagnosing where founder dependency lives, designing the right operating logic, personalising the system around your workflows, and implementing it cleanly.</p>
-        </article>
-        <article class="card">
-          <h3>How the engagement works</h3>
-          <ul>
-            <li>First step: one-off <strong>Chief of Staff Implementation Project</strong></li>
-            <li>Second step: optional monthly managed optimisation and maintenance</li>
-            <li>The two are separate, not bundled into one vague recurring fee</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <div class="grid-2">
-        <article class="card">
-          <h2>What the implementation should change</h2>
-          <p>The point is not to make your business look more technical. The point is to make it less dependent on you for every operational touchpoint.</p>
-          <ul>
-            <li>Reduced founder bottlenecks</li>
-            <li>More consistent execution</li>
-            <li>Fewer dropped follow-ups</li>
-            <li>Better internal coordination</li>
-            <li>Stronger pipeline and delivery momentum</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>This is a strong fit if</h3>
-          <ul>
-            <li>You run a founder-led agency</li>
-            <li>Too much coordination still flows through you</li>
-            <li>Your team needs more operating structure without immediate additional hiring</li>
-            <li>Follow-up and execution quality drop when you get overloaded</li>
-            <li>You are open to paying for a properly designed implementation</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <article class="card">
-        <h2>How the implementation starts</h2>
-        <ol class="numbered">
-          <li>Apply with a few details about your agency, tools, and where you are still the bottleneck.</li>
-          <li>We review whether your business is a fit for a Chief of Staff implementation.</li>
-          <li>If the fit is right, we scope the project around your actual operating pressure points.</li>
-          <li>Approved buyers move into a done-for-you implementation engagement.</li>
-        </ol>
-      </article>
-    </section>
-
-    <section id="apply" class="cta-block">
-      <h2>Apply for a Chief of Staff Implementation</h2>
-      <p>We are looking for founder-led agencies in Australia that have reached the point where the founder is still acting as the coordination layer for too much of the business.</p>
-      <p>If that sounds like your agency, apply for a scoped implementation conversation.</p>
-
-      <div class="fields">
-        <div class="field">What does your agency do?</div>
-        <div class="field">How many people are on the team?</div>
-        <div class="field">Where are you still the bottleneck today?</div>
-        <div class="field">What tools do you currently use to manage communication, tasks, and follow-up?</div>
-        <div class="field full">Are you looking for implementation only, or implementation plus ongoing managed support?</div>
+  <section id="qualification" class="section-light">
+    <div class="wrap qualification-layout">
+      <div class="section-head">
+        <div class="section-label">If this sounds familiar</div>
+        <h2>Execution still runs as if the founder is the operating system.</h2>
+        <div class="section-copy">This is for agencies where operational motion still waits on founder attention.</div>
       </div>
 
-      <div class="cta-row" style="margin-top: 24px;">
-        <a class="btn btn-primary" href="#">Apply for a Chief of Staff Implementation</a>
+      <div class="checklist">
+        <div class="check-item"><div class="check-mark">01</div><span>Requests, follow-ups, and approvals still pass through you before moving forward.</span></div>
+        <div class="check-item"><div class="check-mark">02</div><span>Team members wait on you for non-strategic decisions.</span></div>
+        <div class="check-item"><div class="check-mark">03</div><span>Execution depends on your memory and inbox timing.</span></div>
+        <div class="check-item"><div class="check-mark">04</div><span>Context is split across chats and lost in handoffs.</span></div>
+        <div class="check-item"><div class="check-mark">05</div><span>Work slows whenever your availability becomes the bottleneck.</span></div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="footer-note">
-    Preview only. Final live page can connect this CTA to a real application form or scheduling flow.
-  </footer>
+  <section id="consequence" class="section-dark">
+    <div class="wrap consequence-layout">
+      <div class="section-head">
+        <h2>You are not short of strategy. You are paying a strategic tax on drag.</h2>
+        <div class="section-copy">When routine traffic stays with the founder, speed, follow-through, and trust all degrade at once.</div>
+      </div>
+
+      <div class="cost-list">
+        <div class="cost-item"><div class="cost-mark">A</div><span>Every manual handoff compounds delay.</span></div>
+        <div class="cost-item"><div class="cost-mark">B</div><span>Follow-up gaps become recoveries, not growth.</span></div>
+        <div class="cost-item"><div class="cost-mark">C</div><span>Escalation decisions arrive late, then get costlier and more stressful.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mechanism" class="section-light">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Not a new app. A bounded founder-routing architecture.</h2>
+        <div class="section-copy">We install one operating layer that takes routine work off the founder and keeps judgment where it belongs.</div>
+      </div>
+
+      <div class="mechanism-legend">
+        <div class="legend-pill">intake</div>
+        <div class="legend-pill">routing rules</div>
+        <div class="legend-pill">follow-up</div>
+        <div class="legend-pill">exceptions</div>
+      </div>
+      <div class="mechanism-layout">
+        <div class="mechanism-item"><div class="mechanism-mark">1</div><span><strong>Source nodes:</strong> requests, follow-ups, approvals, and handoffs enter in a structured way.</span></div>
+        <div class="mechanism-item"><div class="mechanism-mark">2</div><span><strong>Routing lanes:</strong> routine work moves to the team without touching founder bandwidth.</span></div>
+        <div class="mechanism-item"><div class="mechanism-mark">3</div><span><strong>Escalation gate:</strong> only ambiguous, risky, or high-impact cases rise upward.</span></div>
+        <div class="mechanism-item"><div class="mechanism-mark">4</div><span><strong>Status beacons:</strong> the founder sees ownership and risk without becoming the traffic layer.</span></div>
+      </div>
+      <div class="mechanism-kicker">The founder stops catching normal flow and starts seeing only the work that deserves judgment.</div>
+    </div>
+  </section>
+
+  <section id="execution-contract" class="section-dark">
+    <div class="wrap contract-layout">
+      <div>
+        <div class="section-head">
+          <h2>Bounded scope. Clear handoff. No endless AI project drift.</h2>
+          <div class="section-copy">We map the bottleneck, define the decision boundary, and install the system with a clean handoff.</div>
+        </div>
+
+        <div class="flow-band">
+          <div class="flow-step">Bottleneck Audit</div>
+          <div class="flow-step">Workflow Map</div>
+          <div class="flow-step">Install + Handoff</div>
+        </div>
+      </div>
+
+      <div class="contract-grid">
+        <div class="included-card">
+          <h3>Included</h3>
+          <div class="support-list">
+            <div class="support-item"><div class="support-mark">+</div><span>A scoped 60-minute Bottleneck Audit.</span></div>
+            <div class="support-item"><div class="support-mark">+</div><span>Workflow map across intake, routing, follow-up, and escalation.</span></div>
+            <div class="support-item"><div class="support-mark">+</div><span>Installation of a bounded routing system.</span></div>
+            <div class="support-item"><div class="support-mark">+</div><span>Founder and team handoff with decision rules and ownership boundaries.</span></div>
+          </div>
+        </div>
+
+        <div class="excluded-card">
+          <h3>Not included</h3>
+          <div class="support-list">
+            <div class="support-item"><div class="support-mark">-</div><span>Open-ended AI consulting.</span></div>
+            <div class="support-item"><div class="support-mark">-</div><span>Ongoing day-to-day operations management.</span></div>
+            <div class="support-item"><div class="support-mark">-</div><span>Unlimited tool or agent builds outside the scoped workflow.</span></div>
+            <div class="support-item"><div class="support-mark">=</div><span>A clear implementation path with founder-only escalation logic.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="decision-cta" class="decision-shell">
+    <div class="wrap">
+      <div class="cta-card">
+        <div>
+          <div class="section-label">The last step to reclaim founder attention</div>
+          <h2>Book Your Bottleneck Audit.</h2>
+          <div class="cta-copy">If your agency still routes too much normal work through the founder, this audit shows what comes off, what stays, and what should only escalate by exception.</div>
+          <div class="hero-cta-row" style="margin-top: 28px;">
+            <a class="btn btn-primary" href="#decision-cta">Book Your Bottleneck Audit</a>
+          </div>
+        </div>
+
+        <div class="included-card">
+          <h3>What you leave with</h3>
+          <div class="support-list">
+            <div class="support-item"><div class="support-mark">1</div><span>A clear map of what should stop routing through the founder.</span></div>
+            <div class="support-item"><div class="support-mark">2</div><span>Decision boundaries for routine flow versus founder-only escalation.</span></div>
+            <div class="support-item"><div class="support-mark">3</div><span>A specific next step if the fit is real and the workflow is worth installing.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
+
